@@ -9,5 +9,6 @@ namespace LibraryManagementSystem.Core.Entities
     public class Review : BaseEntity
     {
         public Book Book { get; set; }
+        public int IdBook { get; set; }
     }
 }

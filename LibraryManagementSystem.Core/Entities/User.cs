@@ -20,6 +20,8 @@ namespace LibraryManagementSystem.Core.Entities
 
         public IList<BookAuthor> BookAuthors { get; private set; } = new List<BookAuthor>();
 
+        public IList<BookLoan> BookLoans { get; set; }
+
         public void Update(string name, string email)
         {
             Name = name;
