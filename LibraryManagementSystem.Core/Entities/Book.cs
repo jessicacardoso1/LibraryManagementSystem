@@ -20,7 +20,7 @@ namespace LibraryManagementSystem.Core.Entities
         public int PublicationYear { get; private set; }
         public IList<Review> Reviews { get; private set; } = new List<Review>();
         public IList<BookAuthor> BookAuthors { get; set; } = new List<BookAuthor>();
-        public IList<BookLoan> BookLoans { get; set; }
+        public List<BookLoan> BookLoans { get; set; } = new List<BookLoan>();
 
         public void Update(string title, string iSBN, int publicationYear)
         {
