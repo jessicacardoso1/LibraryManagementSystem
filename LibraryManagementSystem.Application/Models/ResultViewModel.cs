@@ -32,7 +32,7 @@ namespace LibraryManagementSystem.Application.Models
 
         public static ResultViewModel<T> Success(T data) => new(data);
 
-        public static ResultViewModel<T> Error(T data, string message) => new(data, false, message);
+        public static ResultViewModel<T> Error(string message) => new(default, false, message);
 
 
     }

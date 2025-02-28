@@ -1,4 +1,6 @@
-﻿using LibraryManagementSystem.Application.Models;
+﻿using DevFreela.Application.Queries.GetUserById;
+using LibraryManagementSystem.Application.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagementSystem.API.Controllers
@@ -7,6 +9,7 @@ namespace LibraryManagementSystem.API.Controllers
     [Route("api/user")]
     public class UsersController : ControllerBase
     {
+        private readonly IMediator _mediator;
         [HttpGet]
         public IActionResult Get()
         {
@@ -14,8 +17,15 @@ namespace LibraryManagementSystem.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) { 
-            return Ok();
+        public async Task<IActionResult> GetById(int id) {
+            var result = await _mediator.Send(new GetUserByIdQuery(id));
+
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+
+            return Ok(result);
         }
 
         [HttpPost]
