@@ -8,6 +8,8 @@ namespace LibraryManagementSystem.Core.Entities
 {
     public class BookAuthor : BaseEntity
     {
+        public BookAuthor() { }
+
         public BookAuthor(int idBook, Book book, int idAuthor, User author) : base()
         {
             IdBook = idBook;

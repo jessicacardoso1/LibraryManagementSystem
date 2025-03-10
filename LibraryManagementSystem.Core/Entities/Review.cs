@@ -8,6 +8,7 @@ namespace LibraryManagementSystem.Core.Entities
 {
     public class Review : BaseEntity
     {
+        public Review() { }
         public Review(Book book, int idBook) : base()
         {
             Book = book;

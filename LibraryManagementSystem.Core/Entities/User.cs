@@ -9,6 +9,7 @@ namespace LibraryManagementSystem.Core.Entities
 {
     public class User : BaseEntity
     {
+        public User() { }
         public User(string name, string email, DateTime birthdate) : base()
         {
             Name = name;
@@ -24,7 +25,7 @@ namespace LibraryManagementSystem.Core.Entities
 
         public IList<BookAuthor> BookAuthors { get; private set; } = new List<BookAuthor>();
 
-        public IList<BookLoan> BookLoans { get; set; }
+        public IList<BookLoan> BookLoans { get; private set; } = new List<BookLoan>();
 
         public void Update(string name, string email)
         {

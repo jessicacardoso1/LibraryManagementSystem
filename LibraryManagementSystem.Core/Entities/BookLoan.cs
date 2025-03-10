@@ -8,6 +8,7 @@ namespace LibraryManagementSystem.Core.Entities
 {
     public class BookLoan : BaseEntity
     {
+        public BookLoan() { }
         public BookLoan(DateTime dueDate, int idUser, int idBook) : base()
         {
             LoanDate = DateTime.Now;
