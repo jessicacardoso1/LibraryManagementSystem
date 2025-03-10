@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystem.Core.Repositories;
 using LibraryManagementSystem.Infrastructure.Persistence;
+using LibraryManagementSystem.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,7 +34,7 @@ namespace LibraryManagementSystem.Infrastructure
 
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IUserRepository, IUserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             return services;
         }
     }
