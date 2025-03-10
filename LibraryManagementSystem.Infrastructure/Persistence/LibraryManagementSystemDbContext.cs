@@ -42,7 +42,7 @@ namespace LibraryManagementSystem.Infrastructure.Persistence
 
                     e.HasMany(u => u.BookLoans)
                         .WithOne(bl => bl.User)
-                        .HasForeignKey(u => u.IdUser)
+                        .HasForeignKey(bl => bl.IdUser)
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -73,6 +73,9 @@ namespace LibraryManagementSystem.Infrastructure.Persistence
                         .WithMany(b => b.BookAuthors)
                         .HasForeignKey(ba => ba.IdBook);
                 });
+
+
+            base.OnModelCreating(builder);
         }
     }
 }
