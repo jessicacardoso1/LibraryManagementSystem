@@ -1,4 +1,5 @@
 ﻿using DevFreela.Application.Queries.GetUserById;
+using LibraryManagementSystem.Application.Commands.InsertUser;
 using LibraryManagementSystem.Application.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,12 @@ namespace LibraryManagementSystem.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
+
+        public UsersController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
@@ -29,9 +36,11 @@ namespace LibraryManagementSystem.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CreateUserInputModel createUser)
+        public async Task<IActionResult> PostAsync([FromBody] InsertUserCommand command)
         {
-            return Ok();
+            var result = await _mediator.Send(command);
+
+            return CreatedAtAction(nameof(GetById), new { id = result.Data }, command);
         }
 
         [HttpPut("{id}")]
