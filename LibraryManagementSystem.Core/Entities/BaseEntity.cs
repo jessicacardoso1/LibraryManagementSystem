@@ -11,5 +11,10 @@
         public int Id { get; set; }
         public DateTime CreateAt { get; private set; }
         public bool IsDeleted { get; private set; }
+
+        public void SetAsDeleted()
+        {
+            IsDeleted = true;
+        }
     }
 }

@@ -27,10 +27,11 @@ namespace LibraryManagementSystem.Core.Entities
 
         public IList<BookLoan> BookLoans { get; private set; } = new List<BookLoan>();
 
-        public void Update(string name, string email)
+        public void Update(string name, string email, DateTime birthDate)
         {
             Name = name;
             Email = email;
+            BirthDate = birthDate;
         }
 
     }
