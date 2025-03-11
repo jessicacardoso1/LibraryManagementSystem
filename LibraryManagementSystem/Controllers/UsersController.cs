@@ -1,6 +1,7 @@
-﻿using DevFreela.Application.Queries.GetUserById;
-using LibraryManagementSystem.Application.Commands.InsertUser;
+﻿using LibraryManagementSystem.Application.Commands.InsertUser;
 using LibraryManagementSystem.Application.Models;
+using LibraryManagementSystem.Application.Queries.UserQueries.GetAllUsers;
+using LibraryManagementSystem.Application.Queries.UserQueries.GetUserById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,9 +19,16 @@ namespace LibraryManagementSystem.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok();
+            var result = await _mediator.Send(new GetAllUsersQuery());
+
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
