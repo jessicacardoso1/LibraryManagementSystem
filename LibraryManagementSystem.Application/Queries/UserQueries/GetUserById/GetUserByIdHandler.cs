@@ -3,7 +3,7 @@ using LibraryManagementSystem.Core.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevFreela.Application.Queries.GetUserById
+namespace LibraryManagementSystem.Application.Queries.UserQueries.GetUserById
 {
     public class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, ResultViewModel<UserViewModel>>
     {

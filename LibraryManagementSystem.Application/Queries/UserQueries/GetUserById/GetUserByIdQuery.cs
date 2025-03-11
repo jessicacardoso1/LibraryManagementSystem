@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Application.Queries.GetUserById
+namespace LibraryManagementSystem.Application.Queries.UserQueries.GetUserById
 {
     public class GetUserByIdQuery : IRequest<ResultViewModel<UserViewModel>>
     {
