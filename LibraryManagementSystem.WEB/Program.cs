@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient("API", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7257/api/user"); // Ajuste a URL para o endpoint da sua API
+    client.BaseAddress = new Uri("https://localhost:7257/api/");
 });
 
 // Add MudBlazor services
