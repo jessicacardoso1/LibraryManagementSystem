@@ -1,4 +1,4 @@
-﻿using LibraryManagementSystem.Application.Commands.InsertUser;
+﻿using LibraryManagementSystem.Application.Commands.UserCommands.InsertUser;
 using LibraryManagementSystem.Application.Models;
 using LibraryManagementSystem.Application.Queries.UserQueries.GetAllUsers;
 using LibraryManagementSystem.Application.Queries.UserQueries.GetUserById;
