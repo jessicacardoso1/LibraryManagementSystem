@@ -18,7 +18,7 @@ namespace LibraryManagementSystem.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<int> Add(User user)
+        public async Task<int> AddAsync(User user)
         {
             await _context.User.AddAsync(user);
             await _context.SaveChangesAsync();
@@ -30,7 +30,7 @@ namespace LibraryManagementSystem.Infrastructure.Repositories
             return await _context.User.AnyAsync(x => x.Id == id);
         }
 
-        public async Task<List<User>> GetAll()
+        public async Task<List<User>> GetAllAsync()
         {
             var users = await _context.User
                 .Where(u => !u.IsDeleted)
@@ -39,13 +39,13 @@ namespace LibraryManagementSystem.Infrastructure.Repositories
             return users;
         }
 
-        public async Task<User?> GetById(int id)
+        public async Task<User?> GetByIdAsync(int id)
         {
             var user = await _context.User.SingleOrDefaultAsync(x => x.Id == id);
             return user;
         }
 
-        public async Task Update(User user)
+        public async Task UpdateAsync(User user)
         {
 
             _context.User.Update(user);

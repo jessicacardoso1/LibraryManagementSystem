@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementSystem.Core.Repositories
 {
-    public interface IUserRepository
+    public interface IBookRepository
     {
-        Task<List<User>> GetAllAsync();
-        Task<User?> GetByIdAsync(int id);
-        Task<int> AddAsync(User user);
-        Task UpdateAsync(User user);
-        Task<bool> Exists(int id);
-
+        Task<List<Book>> GetAllAsync();
+        Task<Book?> GetByIdAsync(int id);
+        Task<int> AddAsync(Book book);
+        Task UpdateAsync(Book book);
     }
 }
