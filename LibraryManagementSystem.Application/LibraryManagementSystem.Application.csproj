@@ -17,4 +17,9 @@
     <PackageReference Include="MediatR" Version="12.4.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\LoanCommands\" />
+    <Folder Include="Queries\LoanQueries\" />
+  </ItemGroup>
+
 </Project>
