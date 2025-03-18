@@ -18,11 +18,11 @@ namespace LibraryManagementSystem.Application.Commands.UserCommands.UpdateUser
         }
         public async Task<ResultViewModel> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetById(request.Id);
+            var user = await _userRepository.GetByIdAsync(request.Id);
             if (user == null) return ResultViewModel.Error("User Not Found");
 
             user.Update(request.Nome, request.Email, request.BirthDate);
-            await _userRepository.Update(user);
+            await _userRepository.UpdateAsync(user);
             return ResultViewModel.Success();
         }
     }

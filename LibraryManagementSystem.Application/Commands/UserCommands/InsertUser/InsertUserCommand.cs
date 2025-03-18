@@ -2,7 +2,7 @@
 using LibraryManagementSystem.Core.Entities;
 using MediatR;
 
-namespace LibraryManagementSystem.Application.Commands.InsertUser
+namespace LibraryManagementSystem.Application.Commands.UserCommands.InsertUser
 {
     public class InsertUserCommand : IRequest<ResultViewModel<int>>
     {

@@ -20,11 +20,11 @@ namespace LibraryManagementSystem.Application.Commands.UserCommands.DeleteUser
 
         public async Task<ResultViewModel> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetById(request.Id);
+            var user = await _userRepository.GetByIdAsync(request.Id);
             if (user == null) return ResultViewModel<UserViewModel>.Error("User Not Found");
 
             user.SetAsDeleted();
-            await _userRepository.Update(user);
+            await _userRepository.UpdateAsync(user);
             return ResultViewModel<UserViewModel>.Success();
         }
     }

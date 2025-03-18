@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryManagementSystem.Application.Commands.InsertUser
+namespace LibraryManagementSystem.Application.Commands.UserCommands.InsertUser
 {
     public class InsertUserHandler : IRequestHandler<InsertUserCommand, ResultViewModel<int>>
     {
@@ -21,7 +21,7 @@ namespace LibraryManagementSystem.Application.Commands.InsertUser
         {
             var user = request.ToEntity();
 
-            await _repository.Add(user);
+            await _repository.AddAsync(user);
 
             return ResultViewModel<int>.Success(user.Id);
         }
