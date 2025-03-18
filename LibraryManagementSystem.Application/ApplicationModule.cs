@@ -1,4 +1,4 @@
-﻿using LibraryManagementSystem.Application.Commands.InsertUser;
+﻿using LibraryManagementSystem.Application.Commands.UserCommands.InsertUser;
 using LibraryManagementSystem.Application.Models;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
