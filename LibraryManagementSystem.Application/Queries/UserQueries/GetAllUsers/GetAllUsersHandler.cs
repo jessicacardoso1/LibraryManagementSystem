@@ -15,7 +15,7 @@ public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, ResultViewMo
 
     public async Task<ResultViewModel<List<UserViewModel>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
     {
-        var users = await _userRepository.GetAll();
+        var users = await _userRepository.GetAllAsync();
 
         var model = users.Select(UserViewModel.FromEntity).ToList();
 

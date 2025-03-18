@@ -17,7 +17,7 @@ namespace LibraryManagementSystem.Application.Queries.UserQueries.GetUserById
         }
         public async Task<ResultViewModel<UserViewModel>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var user = await _repository.GetById(request.Id);
+            var user = await _repository.GetByIdAsync(request.Id);
 
             if (user is null)
             {
