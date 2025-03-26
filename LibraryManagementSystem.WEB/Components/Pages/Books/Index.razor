@@ -1,0 +1,12 @@
+﻿@page "/books"
+@inherits IndexBookPage
+
+<MudTextField @bind-Value="SearchTerm" Placeholder="Buscar livros" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Immediate="true" />
+<MudTable Items="@Books" Loading="@IsLoading" Dense="true">
+    <HeaderContent>
+        <MudTh>Title</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Title">@context.Title</MudTd>
+    </RowTemplate>
+</MudTable>
