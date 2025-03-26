@@ -7,7 +7,7 @@ namespace LibraryManagementSystem.WEB.Repositories
     public class BookRepository : IBookRepository
     {
         private readonly HttpClient _httpClient;
-        private const string BaseUrl = "https://localhost:7275/api";
+        private const string BaseUrl = "https://localhost:7257/api";
 
         public BookRepository(IHttpClientFactory httpClientFactory)
         {
