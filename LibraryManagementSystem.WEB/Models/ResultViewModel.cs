@@ -2,13 +2,13 @@
 {
     public class ResultViewModel
     {
-        public ResultViewModel(bool isSucess = true, string message = "")
+        public ResultViewModel(bool isSucces = true, string message = "")
         {
-            IsSucess = isSucess;
+            IsSucces = isSucces;
             Message = message;
         }
 
-        public bool IsSucess { get; set; }
+        public bool IsSucces { get; set; }
         public string Message { get; set; }
 
         public static ResultViewModel Success() => new();
