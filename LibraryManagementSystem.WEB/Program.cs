@@ -1,6 +1,10 @@
 using LibraryManagementSystem.WEB.Components;
 using LibraryManagementSystem.WEB.Components.Account;
 using LibraryManagementSystem.WEB.Data;
+using LibraryManagementSystem.WEB.Repositories;
+using LibraryManagementSystem.WEB.Repositories.Interfaces;
+using LibraryManagementSystem.WEB.Services;
+using LibraryManagementSystem.WEB.Services.Interfaces;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +25,10 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IUserRepository, IUserRepository>();
+
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
