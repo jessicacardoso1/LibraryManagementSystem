@@ -10,12 +10,10 @@ namespace LibraryManagementSystem.Core.Entities
     {
         public BookAuthor() { }
 
-        public BookAuthor(int idBook, Book book, int idAuthor, User author) : base()
+        public BookAuthor(int idBook, int idAuthor) : base()
         {
             IdBook = idBook;
-            Book = book;
             IdAuthor = idAuthor;
-            Author = author;
         }
 
         public int IdBook { get; private set; }

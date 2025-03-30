@@ -10,15 +10,20 @@ namespace LibraryManagementSystem.Core.Entities
     public class User : BaseEntity
     {
         public User() { }
-        public User(string name, string email, DateTime birthdate) : base()
+
+        public User(string name, string email, DateTime birthdate, UserType userType) : base()
         {
             Name = name;
             Email = email;
             BirthDate = birthdate;
+            UserType = userType;
         }
+
 
         public string Name { get; private set; }
         public string Email { get; private set; }
+
+        public UserType UserType { get; private set; }
 
         public DateTime BirthDate { get; set; }
 
@@ -34,5 +39,10 @@ namespace LibraryManagementSystem.Core.Entities
             BirthDate = birthDate;
         }
 
+    }
+    public enum UserType
+    {
+        Regular,
+        Author
     }
 }

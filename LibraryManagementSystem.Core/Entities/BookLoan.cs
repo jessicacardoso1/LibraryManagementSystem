@@ -30,12 +30,5 @@ namespace LibraryManagementSystem.Core.Entities
             ReturnDate = returnDate;
         }
 
-        public void Update(DateTime loanDate, DateTime dueDate, DateTime returnDate) {
-            LoanDate = loanDate;
-            DueDate = dueDate;
-            ReturnDate = returnDate;
-
-        }
-
     }
 }
