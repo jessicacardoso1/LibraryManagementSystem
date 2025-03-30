@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystem.Application.Commands.UserCommands.InsertUser;
 using LibraryManagementSystem.Application.Models;
+using LibraryManagementSystem.Application.Queries.UserQueries.GetAllAuthors;
 using LibraryManagementSystem.Application.Queries.UserQueries.GetAllUsers;
 using LibraryManagementSystem.Application.Queries.UserQueries.GetUserById;
 using MediatR;
@@ -32,7 +33,8 @@ namespace LibraryManagementSystem.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id) {
+        public async Task<IActionResult> GetById(int id)
+        {
             var result = await _mediator.Send(new GetUserByIdQuery(id));
 
             if (!result.IsSuccess)
@@ -63,5 +65,17 @@ namespace LibraryManagementSystem.API.Controllers
             return NoContent();
 
         }
+
+        [HttpGet("authors")]
+        public async Task<IActionResult> GetAuthors()
+        {
+            var results = await _mediator.Send(new GetAllAuthorQuery()  );
+            if (!results.IsSuccess) {
+                return BadRequest(results.Message);
+            }
+
+            return Ok(results);
+        }
+
     }
 }

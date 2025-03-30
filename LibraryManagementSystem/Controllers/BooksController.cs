@@ -1,7 +1,9 @@
 ﻿using LibraryManagementSystem.Application.Models;
 using LibraryManagementSystem.Core.Repositories;
 using LibraryManagementSystem.Infrastructure.Persistence;
+using LibraryManager.Application.Commands.BookCommands.DeleteBook;
 using LibraryManager.Application.Commands.BookCommands.InsertBook;
+using LibraryManager.Application.Commands.BookCommands.UpdateBook;
 using LibraryManager.Application.Queries.BookQueries.GetAllBooks;
 using LibraryManager.Application.Queries.BookQueries.GetByIdBook;
 using MediatR;
@@ -16,8 +18,6 @@ namespace LibraryManagementSystem.API.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly LibraryManagementSystemDbContext _context;
-        private readonly IBookRepository _repository;
         private readonly IMediator _mediator;
 
         public BooksController(IMediator mediator)
@@ -36,7 +36,8 @@ namespace LibraryManagementSystem.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id) {
+        public async Task<IActionResult> GetById(int id)
+        {
             var result = await _mediator.Send(new GetByIdBookQuery(id));
 
             if (!result.IsSuccess) return BadRequest(result.Message);
@@ -55,16 +56,19 @@ namespace LibraryManagementSystem.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] UpdateBookInputModel updateproject)
+        public async Task<IActionResult> Put(int id, [FromBody] UpdateBookCommand command)
         {
-            return NoContent();
+            var result = await _mediator.Send(command);
+            if (!result.IsSuccess) return BadRequest(result.Message);
+            return Ok();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteById(int id)
+        public async Task<IActionResult> DeleteById(int id)
         {
-            return NoContent();
-
+            var result = await _mediator.Send(new DeleteBookCommand(id));
+            if (!result.IsSuccess) return BadRequest(result.Message);
+            return Ok(result);
         }
     }
 }
