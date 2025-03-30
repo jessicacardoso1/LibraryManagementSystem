@@ -9,22 +9,35 @@ namespace LibraryManagementSystem.Application.Models
 {
     public class UserViewModel
     {
-
-        public UserViewModel(string name, string email, DateTime birthDate)
+        public UserViewModel(string name, string email, DateTime birthDate, UserType userType, IList<string>? bookTitles)
         {
             Name = name;
             Email = email;
             BirthDate = birthDate;
+            UserType = userType;
+            BookTitles = bookTitles ?? new List<string>();
         }
 
         public string Name { get; private set; }
         public string Email { get; private set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime BirthDate { get; private set; }
+        public UserType UserType { get; private set; }
 
+        // Adiciona uma lista de livros associados ao autor, para exibição
+        public IList<string> BookTitles { get; private set; }
 
+        // Converte uma entidade User para UserViewModel
         public static UserViewModel FromEntity(User user)
         {
-            return new(user.Name, user.Email, user.BirthDate);
+            var bookTitles = user.BookAuthors?.Select(ba => ba.Book.Title).ToList();
+
+            return new UserViewModel(
+                user.Name,
+                user.Email,
+                user.BirthDate,
+                user.UserType,
+                bookTitles
+            );
         }
     }
 }
