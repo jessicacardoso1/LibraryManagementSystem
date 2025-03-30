@@ -46,10 +46,5 @@ namespace LibraryManagementSystem.Infrastructure.Repositories
             _context.Book.Update(book);
             await _context.SaveChangesAsync();
         }
-
-        public Task<Book?> GetByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

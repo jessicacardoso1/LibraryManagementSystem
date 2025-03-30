@@ -51,5 +51,10 @@ namespace LibraryManagementSystem.Infrastructure.Repositories
             _context.User.Update(user);
             await _context.SaveChangesAsync();
         }
+        public async Task<List<User>> GetAuthorsAsync()
+        {
+            return await _context.User.Where(u => u.UserType == UserType.Author).ToListAsync();
+        }
+
     }
 }
