@@ -26,8 +26,8 @@ namespace LibraryManagementSystem.Infrastructure
         {
             var connectionString = configuration.GetConnectionString("LibraryCs");
 
-            services.AddDbContext<LibraryManagementSystemDbContext>(o => o.UseSqlServer(connectionString));
-
+            services.AddDbContext<LibraryManagementSystemDbContext>(o => o.UseSqlServer(connectionString,
+            b => b.MigrationsAssembly(typeof(LibraryManagementSystemDbContext).Assembly.FullName)));
             return services;
 
         }
@@ -36,6 +36,8 @@ namespace LibraryManagementSystem.Infrastructure
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IBookLoanRepository, BookLoanRepository>();
+            services.AddScoped<IBookAuthorRepository, BookAuthorRepository>();
             return services;
         }
     }

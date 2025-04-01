@@ -1,7 +1,12 @@
 ﻿using LibraryManagementSystem.Core.Entities;
+using LibraryManagementSystem.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+
 
 namespace LibraryManagementSystem.Infrastructure.Persistence
 {
@@ -77,5 +82,18 @@ namespace LibraryManagementSystem.Infrastructure.Persistence
 
             base.OnModelCreating(builder);
         }
+
+    }
+
+}
+public class LibraryManagementSystemDbContextFactory : IDesignTimeDbContextFactory<LibraryManagementSystemDbContext>
+{
+    public LibraryManagementSystemDbContext CreateDbContext(string[] args)
+    {
+        var optionsBuilder = new DbContextOptionsBuilder<LibraryManagementSystemDbContext>();
+        optionsBuilder.UseSqlServer("Server=DESKTOP-TCSDIFK\\SQLEXPRESS;Database=LibraryDb;Integrated Security=True;TrustServerCertificate=True;");
+
+        return new LibraryManagementSystemDbContext(optionsBuilder.Options);
     }
 }
+
