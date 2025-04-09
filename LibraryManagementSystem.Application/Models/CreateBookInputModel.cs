@@ -12,8 +12,9 @@ namespace LibraryManagementSystem.Application.Models
         public string Title { get; private set; }
         public string ISBN { get; private set; }
         public int PublicationYear { get; private set; }
+        public string ImageUrl { get; set; }
 
         public Book ToEntity()
-            => new(Title, ISBN, PublicationYear);
+            => new(Title, ISBN, PublicationYear, ImageUrl);
     }
 }

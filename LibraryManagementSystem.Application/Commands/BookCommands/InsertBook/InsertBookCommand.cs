@@ -9,6 +9,7 @@ public class InsertBookCommand : IRequest<ResultViewModel<int>>
     public string Title { get;  set; }
     public string ISBN { get;  set; }
     public int PublicationYear { get;  set; }
-    
-    public Book ToEntity() => new(Title, ISBN, PublicationYear);
+    public string ImageUrl { get;  set; }
+
+    public Book ToEntity() => new(Title, ISBN, PublicationYear, ImageUrl);
 }

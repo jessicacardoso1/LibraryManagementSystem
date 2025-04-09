@@ -9,21 +9,23 @@ namespace LibraryManagementSystem.Application.Models
 {
     public class BookViewModel
     {
-        public BookViewModel(int id, string title, string iSBN, int publicationYear) : base()
+        public BookViewModel(int id, string title, string iSBN, int publicationYear, string imageUrl) : base()
         {
             Id = id;
             Title = title;
             ISBN = iSBN;
             PublicationYear = publicationYear;
+            ImageUrl = imageUrl;
         }
         public int Id { get; private set; }
         public string Title { get; private set; }
         public string ISBN { get; private set; }
         public int PublicationYear { get; private set; }
+        public string ImageUrl { get; private set; }
 
         public static BookViewModel FromEntity(Book book)
         {
-            return new(book.Id, book.Title, book.ISBN, book.PublicationYear);
+            return new(book.Id, book.Title, book.ISBN, book.PublicationYear, book.ImageUrl);
         }
     }
 }
