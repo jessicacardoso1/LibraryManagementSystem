@@ -2,13 +2,13 @@
 {
     public class ResultViewModel
     {
-        public ResultViewModel(bool isSucces = true, string message = "")
+        public ResultViewModel(bool isSuccess = true, string message = "")
         {
-            IsSucces = isSucces;
+            IsSuccess = isSuccess;
             Message = message;
         }
 
-        public bool IsSucces { get; set; }
+        public bool IsSuccess { get; set; }
         public string Message { get; set; }
 
         public static ResultViewModel Success() => new();
@@ -17,8 +17,8 @@
 
     public class ResultViewModel<T> : ResultViewModel
     {
-        public ResultViewModel(T? data, bool isSucces = true, string message = "")
-        : base(isSucces, message)
+        public ResultViewModel(T? data, bool isSuccess = true, string message = "")
+        : base(isSuccess, message)
         {
             Data = data;
         }
