@@ -17,4 +17,6 @@ public class BookViewModel
     [Required(ErrorMessage = "O ISBN é obrigatório.")]
     [StringLength(10, MinimumLength = 10, ErrorMessage = "O ISBN deve ter no máximo 10 caracteres.")]
     public string ISBN { get; set; }
+
+    public string ImageUrl { get; set; }
 }

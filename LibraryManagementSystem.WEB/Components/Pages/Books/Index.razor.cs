@@ -23,7 +23,7 @@ namespace LibraryManagementSystem.WEB.Components.Pages.Books
         {
             IsLoading = true;
             var result = await Service.GetAllBooks(SearchTerm);
-            if (result.IsSucces)
+            if (result.IsSuccess)
             {
                 Books = result.Data!;
             }

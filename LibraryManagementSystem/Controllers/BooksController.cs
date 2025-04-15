@@ -10,6 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace LibraryManagementSystem.API.Controllers
@@ -46,15 +47,53 @@ namespace LibraryManagementSystem.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] InsertBookCommand command)
+        public async Task<IActionResult> Post([FromForm] InsertBookCommand command)
         {
+            if (command.CoverImage != null && command.CoverImage.Length > 0)
+            {
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                var extension = Path.GetExtension(command.CoverImage.FileName).ToLowerInvariant();
+
+                if (!allowedExtensions.Contains(extension))
+                {
+                    return BadRequest("Tipo de arquivo não permitido. Use .jpg, .jpeg, .png ou .gif.");
+                }
+
+                try
+                {
+                    // Caminho para salvar a imagem
+                    var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                    Directory.CreateDirectory(folderPath);
+
+                    // Gera um nome único para o arquivo
+                    var uniqueFileName = $"{Guid.NewGuid()}{extension}";
+                    var filePath = Path.Combine(folderPath, uniqueFileName);
+
+                    // Salva a imagem na pasta wwwroot
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await command.CoverImage.CopyToAsync(stream);
+                    }
+
+                    // Gera a URL da imagem
+                    var imageUrl = $"/images/{uniqueFileName}";
+                    command.ImageUrl = imageUrl; // Define o caminho da imagem no Command
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"Erro ao salvar a imagem: {ex.Message}");
+                }
+            }
+
+            // Envia o comando ao CQRS para criar o livro
             var result = await _mediator.Send(command);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
 
-            if (!result.IsSuccess) return BadRequest(result.Message);
-
-            return Ok(result.Data);
+            return CreatedAtAction(nameof(GetById), new { id = result.Data }, result.Data);
         }
-
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] UpdateBookCommand command)
         {
@@ -70,5 +109,41 @@ namespace LibraryManagementSystem.API.Controllers
             if (!result.IsSuccess) return BadRequest(result.Message);
             return Ok(result);
         }
+        //[HttpPost("upload")]
+        //public async Task<IActionResult> UploadImage([FromForm] IFormFile file)
+        //{
+        //    if (file == null || file.Length == 0)
+        //    {
+        //        return BadRequest("O arquivo é inválido.");
+        //    }
+
+        //    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+        //    var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+        //    if (!allowedExtensions.Contains(extension))
+        //    {
+        //        return BadRequest("Tipo de arquivo não permitido.");
+        //    }
+
+        //    try
+        //    {
+        //        var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+        //        Directory.CreateDirectory(folderPath);
+
+        //        var uniqueFileName = $"{Guid.NewGuid()}{extension}";
+        //        var filePath = Path.Combine(folderPath, uniqueFileName);
+
+        //        using (var stream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            await file.CopyToAsync(stream);
+        //        }
+
+        //        var imageUrl = $"{Request.Scheme}://{Request.Host}/images/{uniqueFileName}";
+        //        return Ok(new { Path = imageUrl });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Erro ao salvar o arquivo: {ex.Message}");
+        //    }
+        //}
     }
 }

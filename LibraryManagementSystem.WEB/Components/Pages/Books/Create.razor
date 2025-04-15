@@ -1,0 +1,18 @@
+﻿@page "/books/create"
+@inherits CreateBookPage
+
+<MudPaper Elevation="1" Class="pa-4">
+    <MudForm @ref="Form">
+        <MudTextField Label="Título" @bind-Value="Book.Title" Required="true" />
+        <MudTextField Label="ISBN" @bind-Value="Book.ISBN" Required="true" />
+        <MudNumericField Label="Ano de Publicação" @bind-Value="Book.PublicationYear" Required="true" />
+        @if (!string.IsNullOrEmpty(CoverImagePreview))
+        {
+            <MudImage Src="@CoverImagePreview" Alt="Preview da Imagem" Style="max-width: 200px;" />
+        }
+        <InputFile OnChange="HandleImageUpload" />
+
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Save" Disabled="@IsSubmitting">Salvar</MudButton>
+        <MudButton Variant="Variant.Text" OnClick="@(() => OnCancel.InvokeAsync())">Cancelar</MudButton>
+    </MudForm>
+</MudPaper>

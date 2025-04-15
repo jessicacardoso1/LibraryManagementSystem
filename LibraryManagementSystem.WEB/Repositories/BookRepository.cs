@@ -12,8 +12,8 @@ namespace LibraryManagementSystem.WEB.Repositories
         public BookRepository(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient("API");
-
         }
+
         public async Task<ResultViewModel<int>> Add(BookCreateModel book)
         {
             try
@@ -27,8 +27,6 @@ namespace LibraryManagementSystem.WEB.Repositories
 
                 var id = await response.Content.ReadFromJsonAsync<int>();
                 return ResultViewModel<int>.Success(id);
-
-
             }
             catch (Exception ex)
             {
@@ -65,6 +63,7 @@ namespace LibraryManagementSystem.WEB.Repositories
                     var error = await response.Content.ReadAsStringAsync();
                     return ResultViewModel<List<BookViewModel>>.Error(error);
                 }
+
                 var books = await response.Content.ReadFromJsonAsync<List<BookViewModel>>();
                 return ResultViewModel<List<BookViewModel>>.Success(books!);
             }
@@ -93,6 +92,7 @@ namespace LibraryManagementSystem.WEB.Repositories
                 return ResultViewModel<BookViewModel>.Error(ex.Message);
             }
         }
+
         public async Task<ResultViewModel> Update(BookUpdateModel book)
         {
             try
@@ -108,7 +108,6 @@ namespace LibraryManagementSystem.WEB.Repositories
             }
             catch (Exception ex)
             {
-
                 return ResultViewModel.Error(ex.Message);
             }
         }
