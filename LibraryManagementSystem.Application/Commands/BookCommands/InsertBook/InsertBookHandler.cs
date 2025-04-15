@@ -1,4 +1,5 @@
 using LibraryManagementSystem.Application.Models;
+using LibraryManagementSystem.Core.Entities;
 using LibraryManagementSystem.Core.Repositories;
 using MediatR;
 
