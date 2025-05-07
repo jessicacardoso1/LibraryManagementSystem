@@ -13,9 +13,12 @@ namespace LibraryManagementSystem.Application.Models
         public string Email { get; private set; }
         public DateTime BirthDate { get; set; }
         public UserType UserType { get; set; }
+        public string PassWord { get; set; }
+
+        public string Role { get; set; }
 
 
         public User ToEntity()
-            => new(Name, Email, BirthDate, UserType);
+            => new(Name, Email, BirthDate, UserType, PassWord, Role);
     }
 }
