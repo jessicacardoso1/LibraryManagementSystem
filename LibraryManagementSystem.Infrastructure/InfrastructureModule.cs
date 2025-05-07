@@ -1,14 +1,18 @@
 ﻿using LibraryManagementSystem.Core.Repositories;
+using LibraryManagementSystem.Infrastructure.Auth;
 using LibraryManagementSystem.Infrastructure.Persistence;
 using LibraryManagementSystem.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using System.Threading.Tasks;
+using SendGrid;
+using LibraryManagementSystem.Infrastructure.Notifications;
+using SendGrid.Extensions.DependencyInjection;
+
 
 namespace LibraryManagementSystem.Infrastructure
 {
@@ -18,7 +22,31 @@ namespace LibraryManagementSystem.Infrastructure
         {
             services
                  .AddRepositories()
-                 .AddData(configuration);
+                 .AddData(configuration)
+                 .AddAuth(configuration)
+                 .AddEmailService(configuration);
+            return services;
+        }
+
+        private static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddScoped<IAuthService, AuthService>();
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(o =>
+                {
+                    o.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = configuration["Jwt:Issuer"],
+                        ValidAudience = configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+                    };
+                });
+
             return services;
         }
 
@@ -38,6 +66,18 @@ namespace LibraryManagementSystem.Infrastructure
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IBookLoanRepository, BookLoanRepository>();
             services.AddScoped<IBookAuthorRepository, BookAuthorRepository>();
+            return services;
+        }
+
+        private static IServiceCollection AddEmailService(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSendGrid(o =>
+            {
+                o.ApiKey = configuration.GetValue<string>("SendGrid:ApiKey");
+            });
+
+            services.AddScoped<IEmailService, EmailService>();
+
             return services;
         }
     }
