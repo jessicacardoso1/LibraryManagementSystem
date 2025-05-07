@@ -11,12 +11,14 @@ namespace LibraryManagementSystem.Core.Entities
     {
         public User() { }
 
-        public User(string name, string email, DateTime birthdate, UserType userType) : base()
+        public User(string name, string email, DateTime birthdate, UserType userType, string password, string role) : base()
         {
             Name = name;
             Email = email;
             BirthDate = birthdate;
             UserType = userType;
+            Password = password;
+            Role = role;
         }
 
 
@@ -26,6 +28,10 @@ namespace LibraryManagementSystem.Core.Entities
         public UserType UserType { get; private set; }
 
         public DateTime BirthDate { get; set; }
+
+        public string Password { get; set; }
+
+        public string Role { get; set; }
 
 
         public IList<BookAuthor> BookAuthors { get; private set; } = new List<BookAuthor>();
@@ -39,6 +45,10 @@ namespace LibraryManagementSystem.Core.Entities
             BirthDate = birthDate;
         }
 
+        public void UpdatePassaword(string password)
+        {
+            Password = password;
+        }
     }
     public enum UserType
     {

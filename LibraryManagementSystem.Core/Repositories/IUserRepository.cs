@@ -15,6 +15,8 @@ namespace LibraryManagementSystem.Core.Repositories
         Task UpdateAsync(User user);
         Task<bool> Exists(int id);
         Task<List<User>> GetAuthorsAsync();
+        Task<User> GetUserByEmailAndPassordAsync(string email, string passwordHash);
+        Task<User> GetUserByEmail(string email);
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using LibraryManagementSystem.Core.Entities;
 using LibraryManagementSystem.Core.Repositories;
 using LibraryManagementSystem.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -55,6 +56,14 @@ namespace LibraryManagementSystem.Infrastructure.Repositories
         {
             return await _context.User.Where(u => u.UserType == UserType.Author).ToListAsync();
         }
+        public async Task<User> GetUserByEmailAndPassordAsync(string email, string passwordHash)
+        {
+            return await _context.User.SingleOrDefaultAsync(u => u.Email == email && u.Password == passwordHash);
+        }
 
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await _context.User.SingleOrDefaultAsync(u => u.Email == email);
+        }
     }
 }
