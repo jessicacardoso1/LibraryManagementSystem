@@ -43,7 +43,9 @@ namespace LibraryManagementSystem.Application.Commands.RecoveryCommands
 
                 // Armazena o código no cache por 10 minutos
                 _memoryCache.Set(cacheKey, code, TimeSpan.FromMinutes(10));
-
+                _memoryCache.TryGetValue(cacheKey, out string? storedCode);
+                Console.WriteLine($"Código armazenado e recuperado: {storedCode}");
+                Console.WriteLine($"Armazenando código no cache: {code} para {cacheKey}");
                 // Envia o e-mail com o código
                 await _emailService.SendAsync(
                     user.Email,

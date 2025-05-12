@@ -31,7 +31,7 @@ namespace LibraryManagementSystem.Application.Commands.RecoveryCommands
         public async Task<ResultViewModel> Handle(ValidateRecoveryCodeCommand request, CancellationToken cancellationToken)
         {
             // Monta a chave usada para armazenar o código no cache
-            var cacheKey = $"RecoveryCode: {request.Email}";
+            var cacheKey = $"RecoveryCode:{request.Email}";
 
             // Tenta obter o código do cache
             if (!_memoryCache.TryGetValue(cacheKey, out string? code) || code != request.Code)

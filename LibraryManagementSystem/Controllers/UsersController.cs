@@ -115,6 +115,7 @@ namespace LibraryManagementSystem.API.Controllers
         }
 
         [HttpPost("password-recovery/validate")]
+        [AllowAnonymous]
         public async Task<IActionResult> ValidateRecoveryCode(ValidateRecoveryCodeCommand command)
         {
             var result = await _mediator.Send(command);
@@ -128,6 +129,7 @@ namespace LibraryManagementSystem.API.Controllers
         }
 
         [HttpPost("password-recovery/change")]
+        [AllowAnonymous]
         public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
         {
             var result = await _mediator.Send(command);
