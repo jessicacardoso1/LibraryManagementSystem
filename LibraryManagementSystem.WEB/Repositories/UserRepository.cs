@@ -23,7 +23,7 @@ namespace LibraryManagementSystem.WEB.Repositories
                     NewPassword = newPassword
                 };
 
-                var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/password-recovery/change", body);
+                var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/user/password-recovery/change", body);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -38,13 +38,12 @@ namespace LibraryManagementSystem.WEB.Repositories
                 return ResultViewModel.Error(ex.Message);
             }
         }
-        }
 
         public async Task<ResultViewModel<LoginViewModel>> Login(LoginInputModel login)
         {
             try
             {
-                var response = await _httpClient.PutAsJsonAsync($"{BaseUrl}/login", login);
+                var response = await _httpClient.PutAsJsonAsync($"{BaseUrl}/user/login", login);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -65,7 +64,7 @@ namespace LibraryManagementSystem.WEB.Repositories
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/password-recovery/request", new { Email = email });
+                var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/user/password-recovery/request", new { Email = email });
                 return ResultViewModel.Success();
             }
             catch (Exception ex)
@@ -78,7 +77,7 @@ namespace LibraryManagementSystem.WEB.Repositories
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/password-recovery/validate", new { Email = email, Code = code });
+                var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/user/password-recovery/validate", new { Email = email, Code = code });
 
                 if (!response.IsSuccessStatusCode)
                 {
