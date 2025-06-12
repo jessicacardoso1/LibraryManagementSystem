@@ -1,0 +1,123 @@
+﻿@page "/Account/login"
+@using LibraryManagementSystem.WEB.Models
+@using LibraryManagementSystem.WEB.Repositories.Interfaces
+@inject IUserRepository UserRepository
+@inject NavigationManager NavigationManager
+@inject ILogger<Login> Logger
+@inject AuthenticationStateProvider AuthStateProvider
+
+<MudPaper Elevation="10" Class="pa-8 max-width-450 mx-auto mt-16">
+    <MudGrid Justify="Justify.Center" Class="mb-6">
+        <MudAvatar Size="Size.Large" Image="/images/logo.png" Class="mx-auto" />
+    </MudGrid>
+
+    <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-2">Bem-vindo de volta</MudText>
+    <MudText Typo="Typo.body2" Align="Align.Center" Color="Color.Secondary" Class="mb-6">
+        Por favor, insira suas credenciais
+    </MudText>
+
+    <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+        <DataAnnotationsValidator />
+
+        <MudTextField Label="Email"
+                      @bind-Value="loginModel.Email"
+                      Variant="Variant.Outlined"
+                      FullWidth="true"
+                      Required="true"
+                      AdornmentIcon="@Icons.Material.Filled.Email"
+                      Class="mb-4" />
+
+        <MudTextField Label="Senha"
+                      @bind-Value="loginModel.Password"
+                      InputType="InputType.Password"
+                      Variant="Variant.Outlined"
+                      FullWidth="true"
+                      Required="true"
+                      AdornmentIcon="@Icons.Material.Filled.Lock"
+                      Class="mb-4" />
+
+        <MudCheckBox @bind-Value="rememberMe" Label="Lembrar-me" Class="mb-4" />
+
+        <MudButton ButtonType="ButtonType.Submit"
+                   Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   FullWidth="true"
+                   EndIcon="@Icons.Material.Filled.Login"
+                   Disabled="@isLoading"
+                   Class="mt-2">
+            @if (isLoading)
+            {
+                <MudProgressCircular Size="Size.Small" Color="Color.Inherit" />
+            }
+            else
+            {
+                <span>ENTRAR</span>
+            }
+        </MudButton>
+    </EditForm>
+
+    <MudDivider Class="my-6">
+        <MudText Typo="Typo.caption" Color="Color.Secondary">OU</MudText>
+    </MudDivider>
+
+    <MudGrid Class="text-center">
+        <MudItem xs="12" Class="mb-2">
+            <MudLink Href="/Account/ForgotPassword" Underline="Underline.Hover">Esqueceu sua senha?</MudLink>
+        </MudItem>
+        <MudItem xs="12">
+            <MudText Typo="Typo.body2">
+                Não tem uma conta? <MudLink Href="/Account/Register" Underline="Underline.Hover">Registre-se</MudLink>
+            </MudText>
+        </MudItem>
+    </MudGrid>
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <MudAlert Severity="Severity.Error" Class="mt-4" Icon="@Icons.Material.Filled.Error">
+            @errorMessage
+        </MudAlert>
+    }
+</MudPaper>
+
+@code {
+    private LoginInputModel loginModel = new();
+    private bool rememberMe = false;
+    private string? errorMessage;
+    private bool isLoading = false;
+
+    private async Task HandleLogin()
+    {
+        isLoading = true;
+        errorMessage = null;
+
+        try
+        {
+            var result = await UserRepository.Login(loginModel);
+
+            if (result.IsSuccess && result.Data != null)
+            {
+                Logger.LogInformation("Login realizado com sucesso para {Email}", loginModel.Email);
+
+                // Armazena o token de forma segura
+                //await ((CustomAuthStateProvider)AuthStateProvider).MarkUserAsAuthenticated(result.Data.Token, rememberMe);
+
+                NavigationManager.NavigateTo("/", forceLoad: true);
+            }
+            else
+            {
+                errorMessage = result.Message ?? "Credenciais inválidas. Por favor, tente novamente.";
+                Logger.LogWarning("Falha no login para {Email}: {Message}", loginModel.Email, errorMessage);
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Erro inesperado. Por favor, tente novamente mais tarde.";
+            Logger.LogError(ex, "Erro durante o login para {Email}", loginModel.Email);
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+}
