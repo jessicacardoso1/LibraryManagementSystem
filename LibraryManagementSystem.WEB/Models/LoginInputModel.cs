@@ -1,11 +1,16 @@
-﻿namespace LibraryManagementSystem.WEB.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LibraryManagementSystem.WEB.Models
 {
     public class LoginInputModel
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
+        [Required(ErrorMessage = "Email é obrigatório")]
+        [EmailAddress(ErrorMessage = "Email inválido")]
+        public string Email { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = "Senha é obrigatória")]
+        public string Password { get; set; } = string.Empty;
+    }
 
     public class LoginViewModel
     {
